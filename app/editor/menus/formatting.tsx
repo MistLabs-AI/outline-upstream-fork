@@ -21,6 +21,7 @@ import {
   TableSplitCellsIcon,
   PaletteIcon,
   CollapseIcon,
+  SparklesIcon,
 } from "outline-icons";
 import { v4 as uuidv4 } from "uuid";
 import CellBackgroundColorPicker from "../components/CellBackgroundColorPicker";
@@ -54,10 +55,15 @@ import TableCell from "@shared/editor/nodes/TableCell";
 import Highlight from "@shared/editor/marks/Highlight";
 import { DottedCircleIcon } from "~/components/Icons/DottedCircleIcon";
 
+
+import type { EditorView } from "prosemirror-view";
+import { getAIMenuItems } from "../../../plugins/ai/client/getAIMenuItems";
+
 export default function formattingMenuItems(
   state: EditorState,
   isTemplate: boolean,
-  dictionary: Dictionary
+  dictionary: Dictionary,
+  view?: EditorView
 ): MenuItem[] {
   const { schema } = state;
   const isCode = isInCode(state);
@@ -470,6 +476,19 @@ export default function formattingMenuItems(
       tooltip: dictionary.copy,
       shortcut: `${metaDisplay}+C`,
       visible: isCode && !isCodeBlock && (!isMobile || !isEmpty),
+    },
+    {
+      name: "separator",
+      visible: !isCode,
+    },
+    {
+      name: "ai",
+      tooltip: "AI Writing",
+      icon: <SparklesIcon />,
+      label: "AI",
+      visible: !isCode && !isEmpty,
+      active: () => false,
+      children: () => view ? getAIMenuItems(state, view) : [],
     },
   ];
 }

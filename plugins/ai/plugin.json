@@ -1,0 +1,6 @@
+{
+  "id": "ai",
+  "name": "AI Writing Assistant",
+  "priority": 50,
+  "description": "Adds inline AI writing assistance to the editor. Supports Anthropic Claude and OpenAI."
+}

@@ -269,7 +269,7 @@ export function SelectionToolbar(props: Props) {
     items = getNoticeMenuItems(state, readOnly, dictionary);
     align = "end";
   } else {
-    items = getFormattingMenuItems(state, isTemplate, dictionary);
+    items = getFormattingMenuItems(state, isTemplate, dictionary, view);
   }
 
   // Some extensions may be disabled, remove corresponding items
@@ -280,7 +280,7 @@ export function SelectionToolbar(props: Props) {
     if (item.name === "dimensions") {
       return item.visible ?? false;
     }
-    if (item.name && !commands[item.name]) {
+    if (item.name && !commands[item.name] && !item.children) {
       return false;
     }
     if (item.visible === false) {
